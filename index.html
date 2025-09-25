@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WTR Coming Soon</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+  html, body {
+    margin: 0; padding: 0;
+    height: 100%;
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .container {
+    text-align: center;
+    padding: 20px;
+    max-width: 400px;
+  }
+  img {
+    max-width: 150px;
+    margin-bottom: 20px;
+  }
+  h1 {
+    margin: 0 0 10px 0;
+    font-weight: 700;
+  }
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    font-size: 2rem;
+    margin-top: 20px;
+  }
+  .time-segment {
+    background: rgba(255,255,255,0.2);
+    padding: 15px 20px;
+    border-radius: 10px;
+    min-width: 60px;
+  }
+  .label {
+    font-weight: 400;
+    font-size: 0.8rem;
+  }
+  @media (max-width: 480px) {
+    h1 { font-size: 1.5rem; }
+    .countdown {
+      font-size: 1.5rem;
+    }
+    img {
+      max-width: 100px;
+    }
+  }
+</style>
+</head>
+<body>
+  <div class="container">
+    <img src="wtr-1.png" alt="WTR Bottle Logo" />
+    <h1>Coming Soon</h1>
+    <p>We are launching in:</p>
+    <div class="countdown">
+      <div class="time-segment">
+        <span id="days">6</span><br><span class="label">Days</span>
+      </div>
+      <div class="time-segment">
+        <span id="hours">00</span><br><span class="label">Hours</span>
+      </div>
+      <div class="time-segment">
+        <span id="minutes">00</span><br><span class="label">Minutes</span>
+      </div>
+      <div class="time-segment">
+        <span id="seconds">00</span><br><span class="label">Seconds</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const launchDate = new Date();
+    launchDate.setDate(launchDate.getDate() + 6);
+    
+    function updateCountdown() {
+      const now = new Date();
+      const diff = launchDate - now;
+      
+      if (diff <= 0) {
+        document.querySelector('.countdown').innerHTML = "We're Live!";
+        clearInterval(interval);
+        return;
+      }
+      
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const minutes = Math.floor((diff / (1000 * 60)) % 60);
+      const seconds = Math.floor((diff / 1000) % 60);
+      
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+      document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+      document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+    }
+    
+    const interval = setInterval(updateCountdown, 1000);
+    updateCountdown();
+  </script>
+</body>
+</html>
